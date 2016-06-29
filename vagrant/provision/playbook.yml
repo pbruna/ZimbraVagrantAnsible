@@ -1,0 +1,31 @@
+---
+- hosts: all
+  sudo: true
+
+  vars:
+    bind_listen_ipv4:
+      - 'any'
+    bind_allow_query:
+      - '192.168.0.0/16'
+      - '127.0.0.0/8'
+    bind_recursion: 'yes'
+    bind_zone_name: 'zboxapp.dev'
+    bind_zone_master_server_ip: '192.168.50.10'
+    bind_zone_name_servers:
+      - 'zimbra'
+    bind_zone_mail_servers:
+      - name: 'zimbra'
+        preference: 10
+    bind_zone_hosts:
+      - name: 'zimbra'
+        ip: '192.168.50.10'
+
+    zimbra_download_url: https://files.zimbra.com/downloads/8.6.0_GA/zcs-8.6.0_GA_1153.RHEL6_64.20141215151155.tgz
+    zimbra_file: zcs-8.6.0_GA_1153.RHEL6_64.20141215151155
+    zimbra_256sum_file: c2278e6632b9ca72487afdf24da2545238e325338090a9d8ad6e99b39593561c
+    zimbra_password: 12345678
+    zimbra_default_domain: 'zboxapp.dev'
+
+  roles:
+  - role: bertvv.bind
+  - role: pbruna.zimbradev
